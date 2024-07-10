@@ -14,6 +14,7 @@ class Property extends Model
         'title',
         'content',
         'area',
+        'rooms',
         'bedrooms',
         'floor',
         'price',

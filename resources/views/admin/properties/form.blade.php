@@ -69,7 +69,7 @@
                 'class' => 'col',
                 'label' => 'Adresse',
                 'name' => 'address',
-                'value' => $property->adress,
+                'value' => $property->address,
             ])
             @include('shared.input', [
                 'class' => 'col',
