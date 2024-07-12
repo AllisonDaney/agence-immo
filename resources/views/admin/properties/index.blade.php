@@ -1,47 +1,67 @@
 @extends('admin.admin')
 
-@section('title', 'Tous les biens')
+
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center">
-
+    <div class="flex flex-col items-center w-full my-24">
         <h1>@yield('title')</h1>
-        <a href="{{ route('admin.property.create')}}" class="btn btn-primary">Ajouter un bien</a>
+        <a href="{{ route('admin.property.create') }}"
+            class="bg-orange-800 rounded-lg text-sm px-4 py-2 my-4 text-center text-white btn-sm flex-grow-0 ">Ajouter un
+            bien</a>
 
+        <table class="w-full text-sm text-left rtl:text-right text-gray-800 max-w-4xl mt-12">
+            <thead class="text-xs text-gray-800 uppercase bg-stone-200 ">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Titre
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Surface
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Prix
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Ville
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($properties as $property)
+                    <tr class="bg-gray-50 border-b border-stone-300">
+                        <th scope="row" class="px-6 py-4 font-medium text-stone-600 whitespace-nowrap ">
+                            {{ $property->title }}
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ $property->area }}m²
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ number_format($property->price, thousands_separator: ' ') }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $property->city }}
+                        </td>
+                        <td class="flex flex-wrap gap-2 justify-center px-6 py-4">
+                            <a href="{{ route('admin.property.edit', $property) }}"
+                                class="bg-sky-600 rounded-lg text-sm px-4 py-2 text-center text-white">Editer</a>
+                            <form action="{{ route('admin.property.destroy', $property) }}" method="POST">
+                                @csrf
+                                @method('delete')
+                                <button
+                                    class="bg-red-600 rounded-lg text-sm px-4 py-2 text-center text-white btn-sm flex-grow-0">Supprimer</button>
+
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Titre</th>
-                <th>Surface</th>
-                <th>Prix</th>
-                <th>Ville</th>
-                <th class="text-end">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($properties as $property)
-                <tr>
-                    <td>{{ $property->title }}</td>
-                    <td>{{ $property->area }}m²</td>
-                    <td>{{ number_format($property->price, thousands_separator: ' ') }}</td>
-                    <td>{{ $property->city }}</td>
-                    <td>
-                        <div class="d-flex gap-2 w-100 justify-content-end">
-                            <a href="{{ route('admin.property.edit', $property) }}" class="btn btn-primary">Editer</a>
-                            <form action="{{ route('admin.property.destroy', $property) }}" method="POST">
-                            @csrf
-                            @method('delete')
-                            <button class="btn btn-danger">Supprimer</button>
-        
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+
 
     {{ $properties->links() }}
 @endsection

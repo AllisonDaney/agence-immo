@@ -4,13 +4,14 @@ $class ??= null;
 
 @endphp
 
-<div @class(["form-check form-switch", $class])>
+<div @class(["flex items-center mb-4", $class])>
     <input type="hidden" value="0" name="{{ $name}}">
-    <input type="checkbox" value="1" name="{{ $name }}" class="form-check-input @error($name) is-invalid @enderror" roles="switch" id="{{ $name }}">
-    <label class="form-check-label" for="{{ $name }}">{{ $label }}</label>
+    <input type="checkbox" value="1" name="{{ $name }}" class="w-4 h-4 text-gray-900 bg-gray-100 border-gray-300 rounded @error($name) is-invalid @enderror" roles="switch" id="{{ $name }}">
+    <label class="default-checkbox" for="{{ $name }}">{{ $label }}</label>
     @error($name)
     <div class="invalid feedback">
         {{ $message }}
     </div>
 @enderror
 </div>
+

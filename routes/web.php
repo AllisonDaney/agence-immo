@@ -22,7 +22,7 @@ Route::get('/login', [AuthController::class, 'login'])
 
 
 Route::post('/login', [AuthController::class, 'doLogin']);
-Route::delete('/logout', [AuthController::class, 'logout'])
+Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
 
